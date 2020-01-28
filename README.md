@@ -1,6 +1,14 @@
 # GGJ2020
 Repo for game project featuring the bois.
 
+# What Version Of Unity?
+- 2019.1.8f1 (Thanks Tech hub...)
+
+# What tools are included in the manifest?
+- Probuilder
+- Progrids
+- Cinemachine
+- Polybrush
 
 ## Programming Bois:
 - Ant B - Core Game Mechanics / A.I Programming / Dialogue.
