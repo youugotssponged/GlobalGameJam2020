@@ -38,9 +38,9 @@ public class uiController : MonoBehaviour
                 ammoText = childTexts[i];
             }
         }
-        updateWeapon("Ray gun"); //testing
-        updateAmmo(100, 100);
-        createNewMessage("Tutorial", "Do stuff");
+        //updateWeapon("Ray gun"); //testing
+        //updateAmmo(100, 100);
+        //createNewMessage("Tutorial", "Do stuff");
     }
 
     // Update is called once per frame

@@ -12,8 +12,8 @@ public class objectiveController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        createNewObjective("Where's that bloody stick?", "Find the ship's control stick");
-        createNewObjective("What about the engine?", "Find the ship's engine rotor");
+        //createNewObjective("Where's that bloody stick?", "Find the ship's control stick");
+        //createNewObjective("What about the engine?", "Find the ship's engine rotor");
     }
 
     // Update is called once per frame
@@ -118,7 +118,7 @@ class Objective : MonoBehaviour, IComparable<Objective>
     /// </summary>
     public void updatePosition()
     {
-        body.localPosition = new Vector3(0, -100 - (index * 100), 0);
+        body.localPosition = new Vector3(0, -120 - (index * 100), 0);
     }
 
     void displayDetails()
