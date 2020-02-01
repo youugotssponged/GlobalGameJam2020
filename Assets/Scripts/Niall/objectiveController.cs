@@ -51,8 +51,7 @@ public class objectiveController : MonoBehaviour
             } else //if the objective is not completed, make sure it's in the right place on the screeni
             {
                 obj.setIndex(currentObjList.BinarySearch(obj)); //sets the objective's new index in the on screen list to its index in the list
-                //obj.setIndex(currentObjList.IndexOf(obj)); //sets the objective's new index in the on screen list to its index in the list
-                obj.getTransform().localPosition = new Vector3(0, -70 - (obj.getIndex() * 130), 0);
+                obj.updatePosition();
             }
         }
     }
@@ -97,7 +96,7 @@ class Objective : MonoBehaviour, IComparable<Objective>
         onScreen = false;
     }
 
-    int IComparable<Objective>.CompareTo(Objective obj)
+    int IComparable<Objective>.CompareTo(Objective obj) //this is used for binary searching and stops an error pls no remove >:(
     {
         if (this.index > obj.index)
             return 1;
@@ -110,8 +109,16 @@ class Objective : MonoBehaviour, IComparable<Objective>
     public void instantiateSelf()
     {
         body = Instantiate(prefab, parentTransform);
-        body.localPosition = new Vector3(0, -70 - (index * 130), 0);
+        updatePosition();
         displayDetails();
+    }
+
+    /// <summary>
+    /// Updates the objective's position on the screen
+    /// </summary>
+    public void updatePosition()
+    {
+        body.localPosition = new Vector3(0, -100 - (index * 100), 0);
     }
 
     void displayDetails()

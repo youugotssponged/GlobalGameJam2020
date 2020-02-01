@@ -1,16 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class uiController : MonoBehaviour
 {
     public GameObject healthBarObject;
     public GameObject staminaBarObject;
     public GameObject shipStatusBarObject;
+    public GameObject ammoObject;
+    Text[] childTexts;
+    Text weaponName;
+    Text ammoText;
     // Start is called before the first frame update
     void Start()
     {
         //updateHealthBar(50); //sets the health bar to 50%
+        childTexts = ammoObject.GetComponentsInChildren<Text>();
+        for (int i = 0; i < childTexts.Length; i++)
+        {
+            if (childTexts[i].name == "weapon")
+            {
+                weaponName = childTexts[i];
+            } else if (childTexts[i].name == "ammoCount")
+            {
+                ammoText = childTexts[i];
+            }
+        }
+        updateWeapon("Ray gun");
+        updateAmmo(100, 100);
     }
 
     // Update is called once per frame
@@ -44,6 +62,16 @@ public class uiController : MonoBehaviour
     public void updateShipStatusBar(float shipStatus)
     {
         setBarWidth(shipStatusBarObject, shipStatus * 10);
+    }
+
+    public void updateWeapon(string newWeaponName)
+    {
+        weaponName.text = newWeaponName;
+    }
+
+    public void updateAmmo(int currAmmo, int maxAmmo)
+    {
+        ammoText.text = currAmmo + "/" + maxAmmo;
     }
 
     /// <summary>
