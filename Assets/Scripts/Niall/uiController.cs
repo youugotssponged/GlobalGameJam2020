@@ -65,45 +65,57 @@ public class uiController : MonoBehaviour
         }
         msgName.text = name;
         msgDesc.text = desc;
-        fadeInMessage(newMessage);
+        displayMessage(msgName, msgDesc);
     }
 
-    void fadeInMessage(Transform message)
+    void displayMessage(Text name, Text desc)
     {
-        Image img = message.GetComponentInChildren<Image>();
-        StartCoroutine(FadeImage(img, true));
+        StartCoroutine(FadeIn(name, desc));
+        StartCoroutine(FadeOut(name, desc));
     }
 
     /// <summary>
-    /// Fades an image in or out
+    /// Fades an image into the screen
     /// </summary>
-    /// <param name="img">The image to be faded</param>
-    /// <param name="fadeAway">True means the image will fade away, false means the image will fade in</param>
+    /// <param name="t1">The first text to be faded/param>
+    /// <param name="t2">The second test to be faded</param>
     /// <returns></returns>
-    IEnumerator FadeImage(Image img, bool fadeAway)
+    IEnumerator FadeIn(Text t1, Text t2)
     {
+        //fade from transparent to opaque
+        // loop over 5 seconds
+        for (float i = 0; i <= 5; i += Time.deltaTime)
+        {
+            // set color with i as alpha
+            t1.color = new Color(0, 0, 0, i);
+            t2.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Fades an out from the screen
+    /// </summary>
+    /// <param name="t1">The first text to be faded</param>
+    /// <param name="t2">The second text to be faded</param>
+    /// <returns></returns>
+    IEnumerator FadeOut(Text t1, Text t2)
+    {
+        for (float i = 0; i < 10; i += Time.deltaTime)
+        {
+            //keeps the image on screen for 10 seconds
+            yield return null;
+        }
         // fade from opaque to transparent
-        if (fadeAway)
+        // loop over 5 seconds backwards
+        for (float i = 5; i >= 0; i -= Time.deltaTime)
         {
-            // loop over 2 seconds backwards
-            for (float i = 2; i >= 0; i -= Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
+            // set color with i as alpha
+            t1.color = new Color(0, 0, 0, i);
+            t2.color = new Color(0, 0, 0, i);
+            yield return null;
         }
-        // fade from transparent to opaque
-        else
-        {
-            // loop over 2 seconds
-            for (float i = 0; i <= 2; i += Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
-        }
+        t1.gameObject.transform.parent.gameObject.SetActive(false); //disabled the message
     }
 
     /// <summary>
