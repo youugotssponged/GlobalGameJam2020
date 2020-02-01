@@ -11,6 +11,9 @@ public class MouseCamLook : MonoBehaviour
     private Vector2 mouseLook;
     private Vector2 smoothV;
 
+    //[SerializeField] private float lookYMax = 25;
+    //[SerializeField] private float lookYMin = 10; 
+
     private void Start()
     {
         character = this.transform.parent.gameObject;
@@ -26,7 +29,7 @@ public class MouseCamLook : MonoBehaviour
 
         mouseLook += smoothV;
 
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+        transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90.0f, 90.0f), Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
     }
 
