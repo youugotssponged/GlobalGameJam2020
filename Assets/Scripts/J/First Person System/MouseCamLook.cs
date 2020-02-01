@@ -11,6 +11,8 @@ public class MouseCamLook : MonoBehaviour
     private Vector2 mouseLook;
     private Vector2 smoothV;
 
+    [SerializeField] private LayerMask enemyLayerMask;
+
     //[SerializeField] private float lookYMax = 25;
     //[SerializeField] private float lookYMin = 10; 
 
@@ -31,6 +33,29 @@ public class MouseCamLook : MonoBehaviour
 
         transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90.0f, 90.0f), Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
+
+        HandleShooting();
+    }
+
+    private void HandleShooting(){
+        // Left click
+        if(Input.GetMouseButton(0)){
+            RaycastHit hit; 
+            if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, enemyLayerMask)){
+                Debug.Log("You Hit an Enemy!!!!");
+
+                // Deal the enemy damage
+
+                var shotEnemyHealth = hit.collider.GetComponent<EnemyHealth>();
+                if(shotEnemyHealth == null) return;
+                
+                shotEnemyHealth.Damage(10);
+                Debug.Log("Working");
+            }
+            Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward, Color.red, 1000);
+
+        }
+        // Send Raycast
     }
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour
 {
+    //[SerializeField] private Animator anim;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float sprintSpeed = 10.0f;
     [SerializeField] private float strafe = 5.0f;
@@ -31,7 +32,6 @@ public class FirstPersonController : MonoBehaviour
         // Grab Player's rigidbody
         rigidbody = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
-
     }
 
     private void Update()
@@ -50,15 +50,14 @@ public class FirstPersonController : MonoBehaviour
         
         Move();
         Jump();
-
     }
 
     private void Move(){
         isSprinting = Input.GetKey(KeyCode.LeftShift);
-
         if(!isSprinting) {
             translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
             strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+
         }
         else if(isSprinting && isGrounded) {
             translation = Input.GetAxis("Vertical") * speed * Time.deltaTime * sprintSpeed;
@@ -67,6 +66,7 @@ public class FirstPersonController : MonoBehaviour
 
         // Move
         transform.Translate(strafe, 0, translation);
+
     }
 
     private void Jump(){
@@ -90,7 +90,5 @@ public class FirstPersonController : MonoBehaviour
         }
         return false;
     }
-
-
 
 }
