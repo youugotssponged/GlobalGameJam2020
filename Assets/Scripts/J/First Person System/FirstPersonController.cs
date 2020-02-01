@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class FirstPersonController : MonoBehaviour
 {
-    // TODO: STAMINA - COROUTINE - TIME
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float sprintSpeed = 10.0f;
     [SerializeField] private float strafe = 5.0f;
     [SerializeField] private float translation = 5.0f;
 
-    // 
     [SerializeField] private Vector3 jump;
     [SerializeField] private float jumpForce = 2.0f;
-
     [SerializeField] private Rigidbody rigidbody;
 
     private bool isGrounded = true;
     private bool isSprinting = false;
+
+    // TODO:
+    // INTERACTION WITH OBJECTS
+    // SHOOTING MECHANIC 
+    // STAMINA
+
+
 
     private void Start() {
         // Hide Cursor from screen
@@ -42,10 +46,9 @@ public class FirstPersonController : MonoBehaviour
             //////////////////////////////
         }
 
-        Move();
+        isGrounded = CheckIsGrounded(4.0f);
         
-        isGrounded = checkIsGrounded(4.0f);
-
+        Move();
         Jump();
 
     }
@@ -53,13 +56,13 @@ public class FirstPersonController : MonoBehaviour
     private void Move(){
         isSprinting = Input.GetKey(KeyCode.LeftShift);
 
-        if(!isSprinting) { 
+        if(!isSprinting) {
             translation = Input.GetAxis("Vertical") * speed * Time.deltaTime;
             strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         }
         else if(isSprinting && isGrounded) {
-                translation = Input.GetAxis("Vertical") * speed * Time.deltaTime * sprintSpeed;
-                strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime * sprintSpeed;
+            translation = Input.GetAxis("Vertical") * speed * Time.deltaTime * sprintSpeed;
+            strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime * sprintSpeed;
         }
 
         // Move
@@ -67,14 +70,14 @@ public class FirstPersonController : MonoBehaviour
     }
 
     private void Jump(){
-        if(Input.GetKeyDown(KeyCode.Space) && checkIsGrounded(4.0f)){
+        if(Input.GetKeyDown(KeyCode.Space) && CheckIsGrounded(4.0f)){
             rigidbody.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         } 
     }
 
     // REMEMBER TO SET GROUND TAG
-    private bool checkIsGrounded(float checkDistFromPlayerLocation){
+    private bool CheckIsGrounded(float checkDistFromPlayerLocation){
         RaycastHit hit;
 
         if(Physics.Raycast(transform.position, Vector3.down, out hit, checkDistFromPlayerLocation)){
@@ -87,5 +90,7 @@ public class FirstPersonController : MonoBehaviour
         }
         return false;
     }
+
+
 
 }
