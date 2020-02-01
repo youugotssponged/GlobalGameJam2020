@@ -20,11 +20,9 @@ public class pauseMenuController : MonoBehaviour
         {
             if (paused) //if the game is already paused, resume the game
             {
-                paused = false;
                 resumeGame();
             } else //if the game isn't paused, pause the game
             {
-                paused = true;
                 pauseGame();
             }
         }
@@ -32,12 +30,14 @@ public class pauseMenuController : MonoBehaviour
 
     void pauseGame()
     {
+        paused = true;
         Time.timeScale = 0f; //set the timescale to 0, freezing the game
         pauseMenuObject.SetActive(true); //show the pause menu
     }
 
     void resumeGame()
     {
+        paused = false;
         Time.timeScale = 1f; //set the timescale to 1, unfreezing the game
         pauseMenuObject.SetActive(false); //hide the pause menu
     }
