@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class uiController : MonoBehaviour
 {
@@ -11,14 +12,20 @@ public class uiController : MonoBehaviour
     public GameObject ammoObject;
     public GameObject bossHealthBarObject;
     public GameObject bossBarObject;
+    public GameObject pauseMenuObject;
+    public GameObject deathScreenObject;
     public Transform messageParent;
     public Transform messageTransform;
+    bool pauseMenuLocked;
+    bool paused;
     Text[] childTexts;
     Text weaponName;
     Text ammoText;
     // Start is called before the first frame update
     void Start()
     {
+        pauseMenuLocked = false;
+        paused = false;
         //updateHealthBar(50); //sets the health bar to 50%
         childTexts = ammoObject.GetComponentsInChildren<Text>();
         for (int i = 0; i < childTexts.Length; i++)
@@ -39,8 +46,82 @@ public class uiController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown("escape") && !pauseMenuLocked)
+        {
+            if (paused) //if the game is already paused, resume the game
+            {
+                resumeGame();
+            }
+            else //if the game isn't paused, pause the game
+            {
+                pauseGame();
+            }
+        }
     }
+
+    #region "pause menu"
+
+    void pauseGame()
+    {
+        paused = true;
+        Time.timeScale = 0f; //set the timescale to 0, freezing the game
+        pauseMenuObject.SetActive(true); //show the pause menu
+    }
+
+    void resumeGame()
+    {
+        paused = false;
+        Time.timeScale = 1f; //set the timescale to 1, unfreezing the game
+        pauseMenuObject.SetActive(false); //hide the pause menu
+    }
+
+    public void resumeButtonPressed()
+    {
+        //resume the game
+        resumeGame();
+    }
+
+    public void settingsButtonPressed()
+    {
+        //open the settings menu
+    }
+
+    public void returnToMenuButtonPressed()
+    {
+        paused = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    #endregion
+
+    #region "death screen"
+
+    public void showDeathScreen()
+    {
+        Time.timeScale = 0f; //pauses the game
+        pauseMenuLocked = true;
+        deathScreenObject.SetActive(true);
+    }
+
+    public void retryButtonPressed()
+    {
+        Time.timeScale = 1f; //unpauses the game
+        pauseMenuLocked = false;
+        deathScreenObject.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //reloads the current scene
+    }
+
+    public void mainMenuButtonPressed()
+    {
+        Time.timeScale = 1f; //unpauses the game
+        pauseMenuLocked = false;
+        SceneManager.LoadScene(0); //loads the main menu scene
+    }
+
+    #endregion
+
+    #region "bars and UI"
 
     /// <summary>
     /// Creates a new message and displays it on the screen
@@ -149,6 +230,10 @@ public class uiController : MonoBehaviour
     /// <param name="health">Player's new health in percentage of max health</param>
     public void updateHealthBar(float health)
     {
+        if (health == 0)
+        {
+            showDeathScreen();
+        }
         setBarWidth(healthBarObject, health * 5);
     }
 
@@ -211,5 +296,7 @@ public class uiController : MonoBehaviour
         RectTransform rt = (RectTransform)bar.transform;
         rt.sizeDelta = new Vector2(newWidth, 100f);
     }
+
+    #endregion
 
 }
