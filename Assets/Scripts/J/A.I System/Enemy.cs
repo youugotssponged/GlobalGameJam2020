@@ -90,12 +90,22 @@ public class Enemy : MonoBehaviour
 			if (coll.tag == "Player") {
 				state = State.CHASE;
 				target = coll.gameObject;
+                // Deal Damage to the player when touching
+                DealDamage(10.0f);
 			}
 		}
 
         private float CheckEnemyHealth(){
             var enemyHealth = GetComponent<EnemyHealth>();
-            Debug.Log(enemyHealth.health);
+            //Debug.Log(enemyHealth.health);
             return enemyHealth.health;
+        }
+
+        private void DealDamage(float damageDealt){
+            var playerObject = GameObject.FindWithTag("Player");
+            var playerScript = playerObject.GetComponent<FirstPersonController>();
+
+            playerScript.PlayerHealth -= damageDealt;
+            Debug.Log("Player Health: " + playerScript.PlayerHealth);
         }
 }

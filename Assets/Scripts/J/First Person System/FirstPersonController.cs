@@ -14,6 +14,8 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float jumpForce = 2.0f;
     [SerializeField] private Rigidbody rigidbody;
 
+    public float PlayerHealth = 100.0f;
+
     private bool isGrounded = true;
     private bool isSprinting = false;
 
@@ -46,10 +48,14 @@ public class FirstPersonController : MonoBehaviour
             //////////////////////////////
         }
 
-        isGrounded = CheckIsGrounded(4.0f);
-        
-        Move();
-        Jump();
+        if(PlayerHealth > 0){
+            isGrounded = CheckIsGrounded(4.0f);
+            Move();
+            Jump();
+        } else if(PlayerHealth == 0 || PlayerHealth < 0) {
+            // Trigger Nialls Game Over SCREEENNN
+
+        }
     }
 
     private void Move(){
@@ -89,6 +95,18 @@ public class FirstPersonController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void TakeDamage(float damageTaken){
+        PlayerHealth -= damageTaken;
+    }
+
+    public void Heal(float healAmount){
+        PlayerHealth += healAmount;
+    }
+
+    private float CheckHealth(){
+        return PlayerHealth;
     }
 
 }
