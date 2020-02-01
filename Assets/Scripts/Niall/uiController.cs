@@ -6,6 +6,7 @@ public class uiController : MonoBehaviour
 {
     public GameObject healthBarObject;
     public GameObject staminaBarObject;
+    public GameObject shipStatusBarObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,15 @@ public class uiController : MonoBehaviour
     public void updateStaminaBar(float stamina)
     {
         setBarWidth(healthBarObject, stamina * 3);
+    }
+
+    /// <summary>
+    /// Updates the ship status bar to a given value
+    /// </summary>
+    /// <param name="shipStatus">The percantage of the ship that is fixed</param>
+    public void updateShipStatusBar(float shipStatus)
+    {
+        setBarWidth(shipStatusBarObject, shipStatus * 10);
     }
 
     /// <summary>
