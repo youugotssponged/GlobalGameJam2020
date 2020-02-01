@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class objectiveController : MonoBehaviour
 {
@@ -18,7 +19,10 @@ public class objectiveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentObjList.Count > 0)
+        {
+            updateObjectivesList();
+        }
     }
 
     /// <summary>
@@ -33,13 +37,22 @@ public class objectiveController : MonoBehaviour
         addObjectiveToScreen(obj);
     }
 
+    /// <summary>
+    /// Updates the list of objectives on the screen
+    /// </summary>
     void updateObjectivesList()
     {
-        foreach (Objective obj in currentObjList)
+        foreach (Objective obj in currentObjList) //loops through the player's current objectives
         {
             if (obj.getCompleted()) //if the objective is completed remove it from the list
             {
                 removeObjective(obj);
+                break; //breaks out of the foreach loop so the program doesn't loop through an element that isn't there (stops an enumeration error)
+            } else //if the objective is not completed, make sure it's in the right place on the screeni
+            {
+                obj.setIndex(currentObjList.BinarySearch(obj)); //sets the objective's new index in the on screen list to its index in the list
+                //obj.setIndex(currentObjList.IndexOf(obj)); //sets the objective's new index in the on screen list to its index in the list
+                obj.getTransform().localPosition = new Vector3(0, -70 - (obj.getIndex() * 130), 0);
             }
         }
     }
@@ -56,9 +69,14 @@ public class objectiveController : MonoBehaviour
         currentObjList.Remove(obj);
     }
 
+    public void testCompleteObj()
+    {
+        currentObjList[0].setCompleted(true);
+    }
+
 }
 
-class Objective : MonoBehaviour
+class Objective : MonoBehaviour, IComparable<Objective>
 {
     Transform body;
     Transform prefab;
@@ -80,18 +98,44 @@ class Objective : MonoBehaviour
         Debug.Log("New objective, " + name + "!");
     }
 
+    int IComparable<Objective>.CompareTo(Objective obj)
+    {
+        if (this.index > obj.index)
+            return 1;
+        else if (this.index == obj.index)
+            return 0;
+        else
+            return -1;
+    }
+
     public void instantiateSelf()
     {
-        //body = Instantiate(prefab, new Vector3(0, -70 - (index * 130), 0), Quaternion.identity, parentTransform);
         body = Instantiate(prefab, parentTransform);
         body.localPosition = new Vector3(0, -70 - (index * 130), 0);
-        //if (index == 0)
-        //{
-        //    body.localPosition = new Vector3(0, parentTransform.position.z - 70, 0);
-        //} else
-        //{
-        //}
         Debug.Log(body.position);
+        displayDetails();
+    }
+
+    void displayDetails()
+    {
+        Text[] childTexts = body.GetComponentsInChildren<Text>();
+        for (int i = 0; i < childTexts.Length; i++)
+        {
+            if (childTexts[i].name == "name")
+            {
+                childTexts[i].text = objName;
+            } else if (childTexts[i].name == "desc")
+            {
+                childTexts[i].text = objDesc;
+            }
+        }
+    }
+
+    #region "getters and setters"
+
+    public void setIndex(int i)
+    {
+        index = i;
     }
 
     public int getIndex()
@@ -109,6 +153,16 @@ class Objective : MonoBehaviour
         return completed;
     }
 
+    public void setCompleted(bool c)
+    {
+        completed = c;
+        if (c)
+        {
+            Toggle tg = body.GetComponent<Toggle>();
+            tg.isOn = true;
+        }
+    }
+
     public bool getOnScreen()
     {
         return onScreen;
@@ -119,5 +173,7 @@ class Objective : MonoBehaviour
         body.gameObject.SetActive(s);
         onScreen = s;
     }
+
+    #endregion
 
 }
