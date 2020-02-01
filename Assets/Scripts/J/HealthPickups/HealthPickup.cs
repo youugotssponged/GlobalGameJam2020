@@ -33,9 +33,9 @@ public class HealthPickup : MonoBehaviour
     public void givePlayerHealth()
     {
         var playerObject = GameObject.FindWithTag("Player");
-        var playerScript = playerObject.GetComponent<FirstPersonController>();
+        //var playerScript = playerObject.GetComponent<FirstPersonController>();
 
-        playerScript.PlayerHealth += extraHealth;
-        Debug.Log("Player Health: " + playerScript.PlayerHealth);
+        FirstPersonController.PlayerHealth += extraHealth;
+        Debug.Log("Player Health: " + FirstPersonController.PlayerHealth);
     }
 }

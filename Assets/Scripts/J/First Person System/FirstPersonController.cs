@@ -14,10 +14,12 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float jumpForce = 2.0f;
     [SerializeField] private Rigidbody rigidbody;
 
-    public float PlayerHealth = 100.0f;
+    public static float PlayerHealth = 100.0f;
 
     private bool isGrounded = true;
     private bool isSprinting = false;
+
+    public static bool showGAMEOVER = false;
 
     // TODO:
     // INTERACTION WITH OBJECTS
@@ -30,7 +32,7 @@ public class FirstPersonController : MonoBehaviour
         // Hide Cursor from screen
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+        showGAMEOVER = false;
         // Grab Player's rigidbody
         rigidbody = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
@@ -40,8 +42,8 @@ public class FirstPersonController : MonoBehaviour
     {
         // Show Cursor + Trigger Nialls UI for Pause
         if(Input.GetKey(KeyCode.Escape)){
-            Cursor.lockState = CursorLockMode.Locked;
-
+            //Cursor.lockState = CursorLockMode.Locked;
+            
             //////////////////////////////
             // TODO
             // Send Event to Nialls UI
@@ -51,10 +53,11 @@ public class FirstPersonController : MonoBehaviour
         if(PlayerHealth > 0){
             isGrounded = CheckIsGrounded(4.0f);
             Move();
+            showGAMEOVER = false;
             Jump();
         } else if(PlayerHealth == 0 || PlayerHealth < 0) {
             // Trigger Nialls Game Over SCREEENNN
-
+            showGAMEOVER = true;
         }
     }
 

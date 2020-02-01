@@ -31,9 +31,9 @@ public class ShipPickup : MonoBehaviour
     public void HandlePartCollected()
     {
         var _shipPickupManager = GameObject.Find("ShipPartsManager");
-        var _script = _shipPickupManager.GetComponent<ShipPickupManager>();
+        //var _script = _shipPickupManager.GetComponent<ShipPickupManager>();
 
-        _script.currentShipPartsFound += 1;
+        ShipPickupManager.currentShipPartsFound += 1;
 
     }
 }

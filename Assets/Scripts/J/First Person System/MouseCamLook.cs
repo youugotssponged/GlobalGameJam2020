@@ -15,6 +15,8 @@ public class MouseCamLook : MonoBehaviour
     [SerializeField] private LayerMask healthPickupLayerMask;
     [SerializeField] private LayerMask shipPickupLayerMask;
 
+    public static bool LOCKCAMROT = false;
+
     //[SerializeField] private float lookYMax = 25;
     //[SerializeField] private float lookYMin = 10; 
 
@@ -33,8 +35,11 @@ public class MouseCamLook : MonoBehaviour
 
         mouseLook += smoothV;
 
-        transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90.0f, 90.0f), Vector3.right);
-        character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
+        if (LOCKCAMROT == false)
+        {
+            transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90.0f, 90.0f), Vector3.right);
+            character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
+        }
 
         HandleShooting();
         HandleHealthPickup();

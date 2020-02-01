@@ -24,6 +24,7 @@ public class uiController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        deathScreenObject.SetActive(false);
         pauseMenuLocked = false;
         paused = false;
         //updateHealthBar(50); //sets the health bar to 50%
@@ -50,13 +51,16 @@ public class uiController : MonoBehaviour
         {
             if (paused) //if the game is already paused, resume the game
             {
+                //.lockState = CursorLockMode.Locked;
                 resumeGame();
             }
             else //if the game isn't paused, pause the game
             {
+                //Cursor.lockState = CursorLockMode.None;
                 pauseGame();
             }
         }
+        updateShipStatusBar(ShipPickupManager.currentShipPartsFound);
     }
 
     #region "pause menu"
@@ -64,15 +68,22 @@ public class uiController : MonoBehaviour
     void pauseGame()
     {
         paused = true;
+        Cursor.visible = true;
         Time.timeScale = 0f; //set the timescale to 0, freezing the game
         pauseMenuObject.SetActive(true); //show the pause menu
+        MouseCamLook.LOCKCAMROT = true;
+        Cursor.lockState = CursorLockMode.None;
+
     }
 
     void resumeGame()
     {
         paused = false;
+        Cursor.visible = false;
         Time.timeScale = 1f; //set the timescale to 1, unfreezing the game
         pauseMenuObject.SetActive(false); //hide the pause menu
+        MouseCamLook.LOCKCAMROT = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void resumeButtonPressed()
@@ -102,13 +113,18 @@ public class uiController : MonoBehaviour
         Time.timeScale = 0f; //pauses the game
         pauseMenuLocked = true;
         deathScreenObject.SetActive(true);
+        MouseCamLook.LOCKCAMROT = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void retryButtonPressed()
     {
+        FirstPersonController.showGAMEOVER = false;
+        FirstPersonController.PlayerHealth = 100.0f;
+        deathScreenObject.SetActive(false);
         Time.timeScale = 1f; //unpauses the game
         pauseMenuLocked = false;
-        deathScreenObject.SetActive(false);
+        resumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //reloads the current scene
     }
 
@@ -221,7 +237,7 @@ public class uiController : MonoBehaviour
     /// <param name="health">The new health of the boss in percent</param>
     public void updateBossHealthBar(float health)
     {
-        setBarWidth(bossHealthBarObject, health * 12);
+        setBarWidth(bossHealthBarObject, health * 12, 60f);
     }
 
     /// <summary>
@@ -230,11 +246,11 @@ public class uiController : MonoBehaviour
     /// <param name="health">Player's new health in percentage of max health</param>
     public void updateHealthBar(float health)
     {
-        if (health == 0)
-        {
-            showDeathScreen();
-        }
-        setBarWidth(healthBarObject, health * 5);
+        //if (health == 0)
+        //{
+        //    showDeathScreen();
+        //}
+        setBarWidth(healthBarObject, health * 5, 100f);
     }
 
     /// <summary>
@@ -243,16 +259,18 @@ public class uiController : MonoBehaviour
     /// <param name="stamina">Player's new stamina in percentage of max stamina</param>
     public void updateStaminaBar(float stamina)
     {
-        setBarWidth(healthBarObject, stamina * 3);
+        setBarWidth(healthBarObject, stamina * 3, 100f);
     }
 
     /// <summary>
     /// Updates the ship status bar to a given value
     /// </summary>
-    /// <param name="shipStatus">The percantage of the ship that is fixed</param>
+    /// <param name="shipStatus">The number of the ship parts collected (out of 13)</param>
     public void updateShipStatusBar(float shipStatus)
     {
-        setBarWidth(shipStatusBarObject, shipStatus * 10);
+        Text numberText = shipStatusBarObject.GetComponentInChildren<Text>();
+        setBarWidth(shipStatusBarObject, shipStatus * 100, 30f);
+        numberText.text = shipStatus + "/13";
     }
 
     /// <summary>
@@ -291,10 +309,10 @@ public class uiController : MonoBehaviour
     /// </summary>
     /// <param name="bar">Bar that will have its width changed</param>
     /// <param name="newWidth">The new width of the bar</param>
-    void setBarWidth(GameObject bar, float newWidth)
+    void setBarWidth(GameObject bar, float newWidth, float newHeight)
     {
         RectTransform rt = (RectTransform)bar.transform;
-        rt.sizeDelta = new Vector2(newWidth, 100f);
+        rt.sizeDelta = new Vector2(newWidth, newHeight);
     }
 
     #endregion

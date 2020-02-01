@@ -4,12 +4,28 @@ using UnityEngine;
 
 public class ShipPickupManager : MonoBehaviour
 {
-    public int currentShipPartsFound = 0;
+    public static int currentShipPartsFound = 0;
     private int totalShipParts = 13;
+
+    private static ShipPickupManager instance = null;
+    public static ShipPickupManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        currentShipPartsFound += 1;
     }
 
     // Update is called once per frame

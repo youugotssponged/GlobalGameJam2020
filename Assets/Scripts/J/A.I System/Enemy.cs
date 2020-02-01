@@ -103,9 +103,9 @@ public class Enemy : MonoBehaviour
 
         private void DealDamage(float damageDealt){
             var playerObject = GameObject.FindWithTag("Player");
-            var playerScript = playerObject.GetComponent<FirstPersonController>();
+            //var playerScript = playerObject.GetComponent<FirstPersonController>();
 
-            playerScript.PlayerHealth -= damageDealt;
-            Debug.Log("Player Health: " + playerScript.PlayerHealth);
+            FirstPersonController.PlayerHealth -= damageDealt;
+            Debug.Log("Player Health: " + FirstPersonController.PlayerHealth);
         }
 }

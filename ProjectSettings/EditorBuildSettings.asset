@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/UI/mainMenuTest.unity
     guid: 4451fd25358d82a49896975e73bee393
   - enabled: 1
-    path: Assets/UI/gameUItesting.unity
-    guid: 3ef3264294c72c84399846d65237a77f
+    path: Assets/Scenes/Levels/Morgs_Forest_Level.unity
+    guid: a60af55deb6fc1946ad9b25562b4b285
+  - enabled: 1
+    path: Assets/Scenes/Levels/Morgs_Ice_Level.unity
+    guid: 4e18e9d0381104f4c82083a6a92f9fe4
+  - enabled: 1
+    path: Assets/Scenes/Levels/Morgs_Lava_Level_Final.unity
+    guid: 41c6e14cd3bc41743803dcac6ef668a5
   m_configObjects: {}
