@@ -22,20 +22,17 @@ public class menuController : MonoBehaviour
     public void playButtonPressed()
     {
         SceneManager.LoadScene(1); //change the number to main game scene number in build order
-        Debug.Log("Play");
     }
 
     public void instructionsButtonPressed()
     {
         mainMenuObject.SetActive(false);
         instructionsObject.SetActive(true);
-        Debug.Log("Instructions");
     }
 
     public void exitButtonPressed()
     {
         Application.Quit();
-        Debug.Log("Exit");
     }
 
     public void returnToMenu()

@@ -95,7 +95,6 @@ class Objective : MonoBehaviour, IComparable<Objective>
         objDesc = desc;
         completed = false;
         onScreen = false;
-        Debug.Log("New objective, " + name + "!");
     }
 
     int IComparable<Objective>.CompareTo(Objective obj)
@@ -112,7 +111,6 @@ class Objective : MonoBehaviour, IComparable<Objective>
     {
         body = Instantiate(prefab, parentTransform);
         body.localPosition = new Vector3(0, -70 - (index * 130), 0);
-        Debug.Log(body.position);
         displayDetails();
     }
 
