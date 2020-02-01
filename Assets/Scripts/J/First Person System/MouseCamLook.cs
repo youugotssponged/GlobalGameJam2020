@@ -38,7 +38,7 @@ public class MouseCamLook : MonoBehaviour
     }
 
     private void HandleShooting(){
-        // Left click
+        // Left click 
         if(Input.GetMouseButton(0)){
             RaycastHit hit; 
             if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, enemyLayerMask)){
