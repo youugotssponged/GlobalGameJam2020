@@ -12,6 +12,8 @@ public class MouseCamLook : MonoBehaviour
     private Vector2 smoothV;
 
     [SerializeField] private LayerMask enemyLayerMask;
+    [SerializeField] private LayerMask healthPickupLayerMask;
+    [SerializeField] private LayerMask shipPickupLayerMask;
 
     //[SerializeField] private float lookYMax = 25;
     //[SerializeField] private float lookYMin = 10; 
@@ -35,8 +37,11 @@ public class MouseCamLook : MonoBehaviour
         character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
 
         HandleShooting();
+        HandleHealthPickup();
+        HandleShipPartPickup();
     }
 
+    // TODO: ADD SOUND
     private void HandleShooting(){
         // Left click 
         if(Input.GetMouseButton(0)){
@@ -56,6 +61,41 @@ public class MouseCamLook : MonoBehaviour
 
         }
         // Send Raycast
+    }
+
+    // TODO: ADD SOUND
+    private void HandleHealthPickup()
+    {
+        if (Input.GetKey(KeyCode.E)){
+            Debug.Log("E WAS PRESSED");
+            RaycastHit hit;
+
+            if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, healthPickupLayerMask)){
+                Debug.Log("You picked up a health pickup");
+
+                var healthPickupFound = hit.collider.GetComponent<HealthPickup>();
+                if (healthPickupFound == null) return;
+                healthPickupFound.isActive = false;
+            }
+        }
+    }
+
+    private void HandleShipPartPickup()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            Debug.Log("E WAS PRESSED");
+            RaycastHit hit;
+
+            if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, shipPickupLayerMask))
+            {
+                Debug.Log("You picked up a SHIP PART");
+
+                var shipPickup = hit.collider.GetComponent<ShipPickup>();
+                if (shipPickup == null) return;
+                shipPickup.isActive = false;
+            }
+        }
     }
 
 }
