@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba58e67b2a284814fb3432bf0df8ded9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIbody: {fileID: 6351351586851651353, guid: 583bc744a3e8e9947a64404f0e96d62c, type: 3}
   isActive: 0
   extraHealth: 10
 --- !u!1 &8532984797879069993

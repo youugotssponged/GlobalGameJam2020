@@ -18,12 +18,14 @@ public class uiController : MonoBehaviour
     public Transform messageTransform;
     bool pauseMenuLocked;
     bool paused;
+    float currHealth;
     Text[] childTexts;
     Text weaponName;
     Text ammoText;
     // Start is called before the first frame update
     void Start()
     {
+        currHealth = 100;
         deathScreenObject.SetActive(false);
         pauseMenuLocked = false;
         paused = false;
@@ -43,7 +45,7 @@ public class uiController : MonoBehaviour
         //updateAmmo(100, 100);
         //createNewMessage("Tutorial", "Do stuff");
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -141,6 +143,11 @@ public class uiController : MonoBehaviour
 
     #region "bars and UI"
 
+    public void help(string n, string d)
+    {
+        createNewMessage(n, d);
+    }
+
     /// <summary>
     /// Creates a new message and displays it on the screen
     /// </summary>
@@ -186,8 +193,8 @@ public class uiController : MonoBehaviour
         for (float i = 0; i <= 5; i += Time.deltaTime)
         {
             // set color with i as alpha
-            t1.color = new Color(0, 0, 0, i);
-            t2.color = new Color(0, 0, 0, i);
+            t1.color = new Color(0, 204, 255, i);
+            t2.color = new Color(0, 204, 255, i);
             yield return null;
         }
     }
@@ -210,8 +217,8 @@ public class uiController : MonoBehaviour
         for (float i = 5; i >= 0; i -= Time.deltaTime)
         {
             // set color with i as alpha
-            t1.color = new Color(0, 0, 0, i);
-            t2.color = new Color(0, 0, 0, i);
+            t1.color = new Color(0, 204, 255, i);
+            t2.color = new Color(0, 204, 255, i);
             yield return null;
         }
         t1.gameObject.transform.parent.gameObject.SetActive(false); //disabled the message
@@ -248,10 +255,12 @@ public class uiController : MonoBehaviour
     /// <param name="health">Player's new health in percentage of max health</param>
     public void updateHealthBar(float health)
     {
-        //if (health == 0)
-        //{
-        //    showDeathScreen();
-        //}
+        if (health > currHealth)
+        {
+            //float healthDiff = health - currHealth;
+            createNewMessage("Pickup", "You gained " + (health - currHealth) + " health!");
+        }
+        currHealth = health;
         setBarWidth(healthBarObject, health * 5, 100f);
     }
 
