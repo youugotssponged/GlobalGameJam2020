@@ -128,7 +128,7 @@ public class objectiveController : MonoBehaviour
     {
         if (level3ObjList[0].getName() == "The final piece of the puzzle")
         {
-            level3ObjList[0].setDesc("Find the last part of your ship " + lvl3Parts + "/6");
+            level3ObjList[0].setDesc("Find the last part of your ship " + lvl3Parts + "/1");
             level3ObjList[0].setCompleted(checkCompleted(level3ObjList[0], lvl3Parts));
         }
     }
