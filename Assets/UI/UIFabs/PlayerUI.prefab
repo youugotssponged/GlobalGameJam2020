@@ -493,6 +493,7 @@ MonoBehaviour:
   bossBarObject: {fileID: 6351351587527473206}
   pauseMenuObject: {fileID: 6351351588535083128}
   deathScreenObject: {fileID: 6351351588461045117}
+  objectivesObject: {fileID: 6351351588018301057}
   messageParent: {fileID: 6351351587365614198}
   messageTransform: {fileID: 2636945403446566566, guid: e9995681bdc114647ae2d53b6a34b2f2,
     type: 3}
@@ -2157,7 +2158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 301.75, y: 59}
+  m_AnchoredPosition: {x: 236, y: 59}
   m_SizeDelta: {x: -956.5, y: -424}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6351351588018301071
