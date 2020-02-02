@@ -7,7 +7,7 @@ public class Gateway2 : MonoBehaviour
 {
     public bool unlock = false;
     public bool reverseDoor = false; 
-    private int numNeededToUnlock = 12;
+    private int numNeededToUnlock = 6;
     private int fullToReverse = 13;
 
     public GameObject block1;
@@ -36,10 +36,10 @@ public class Gateway2 : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" && unlock){
-            // TELEPORT TO LEVEL 3
-            SceneManager.LoadScene(4);
+            // TELEPORT TO LEVEL 2
+            SceneManager.LoadScene(3);
         } else if(other.tag == "Player" && reverseDoor){
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(1);
         }
     }
 }

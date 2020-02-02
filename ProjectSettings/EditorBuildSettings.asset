@@ -9,12 +9,6 @@ EditorBuildSettings:
     path: Assets/UI/mainMenuTest.unity
     guid: 4451fd25358d82a49896975e73bee393
   - enabled: 1
-    path: Assets/Scripts/Tony/In Trouble Scene.unity
-    guid: 8019d43f0672d9944b650d02d092268a
-  - enabled: 1
-    path: Assets/Scripts/Tony/Crash Scene.unity
-    guid: dda6db3eb1e0cd44d9cfcddfeb949db7
-  - enabled: 1
     path: Assets/Scenes/Levels/Morgs_Forest_Level.unity
     guid: a60af55deb6fc1946ad9b25562b4b285
   - enabled: 1
@@ -23,7 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Morgs_Lava_Level_Final.unity
     guid: 41c6e14cd3bc41743803dcac6ef668a5
-  - enabled: 1
-    path: Assets/Scenes/Levels/J_Credits.unity
-    guid: 9f741f4ae882d21478f69b1b48e7af42
   m_configObjects: {}

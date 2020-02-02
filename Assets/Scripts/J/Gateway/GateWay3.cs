@@ -29,7 +29,7 @@ public class GateWay3 : MonoBehaviour
     {
         if(other.tag == "Player" && bossDead){
             // TELEPORT TO LEVEL 2
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(2);
         } 
     }
 }
