@@ -18,12 +18,27 @@ public class uiController : MonoBehaviour
     public Transform messageTransform;
     bool pauseMenuLocked;
     bool paused;
+    float currHealth;
+    float currParts;
     Text[] childTexts;
     Text weaponName;
     Text ammoText;
     // Start is called before the first frame update
     void Start()
     {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        if (currentScene == 1) //level 1 - forest
+        {
+
+        } else if (currentScene == 2) //level 2 - ice
+        {
+
+        } else if (currentScene == 3) //level 3 - lava
+        {
+
+        }
+        currHealth = 100;
+        currParts = 0;
         deathScreenObject.SetActive(false);
         pauseMenuLocked = false;
         paused = false;
@@ -43,7 +58,7 @@ public class uiController : MonoBehaviour
         //updateAmmo(100, 100);
         //createNewMessage("Tutorial", "Do stuff");
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -140,7 +155,7 @@ public class uiController : MonoBehaviour
     #endregion
 
     #region "bars and UI"
-
+    
     /// <summary>
     /// Creates a new message and displays it on the screen
     /// </summary>
@@ -186,8 +201,8 @@ public class uiController : MonoBehaviour
         for (float i = 0; i <= 5; i += Time.deltaTime)
         {
             // set color with i as alpha
-            t1.color = new Color(0, 0, 0, i);
-            t2.color = new Color(0, 0, 0, i);
+            t1.color = new Color(0, 204, 255, i);
+            t2.color = new Color(0, 204, 255, i);
             yield return null;
         }
     }
@@ -210,8 +225,8 @@ public class uiController : MonoBehaviour
         for (float i = 5; i >= 0; i -= Time.deltaTime)
         {
             // set color with i as alpha
-            t1.color = new Color(0, 0, 0, i);
-            t2.color = new Color(0, 0, 0, i);
+            t1.color = new Color(0, 204, 255, i);
+            t2.color = new Color(0, 204, 255, i);
             yield return null;
         }
         t1.gameObject.transform.parent.gameObject.SetActive(false); //disabled the message
@@ -248,10 +263,12 @@ public class uiController : MonoBehaviour
     /// <param name="health">Player's new health in percentage of max health</param>
     public void updateHealthBar(float health)
     {
-        //if (health == 0)
-        //{
-        //    showDeathScreen();
-        //}
+        if (health > currHealth)
+        {
+            //float healthDiff = health - currHealth;
+            createNewMessage("Pickup", "You gained " + (health - currHealth) + " health!");
+        }
+        currHealth = health;
         setBarWidth(healthBarObject, health * 5, 100f);
     }
 
@@ -270,6 +287,11 @@ public class uiController : MonoBehaviour
     /// <param name="shipStatus">The number of the ship parts collected (out of 13)</param>
     public void updateShipStatusBar(float shipStatus)
     {
+        if (shipStatus > currParts)
+        {
+            createNewMessage("Pickup", "You found a part of your ship! Only " + (13 - shipStatus) + "to go");
+        }
+        currParts = shipStatus;
         Text numberText = shipStatusBarObject.GetComponentInChildren<Text>();
         setBarWidth(shipStatusBarObject, shipStatus * 100, 30f);
         numberText.text = shipStatus + "/13";
