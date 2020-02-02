@@ -19,13 +19,26 @@ public class uiController : MonoBehaviour
     bool pauseMenuLocked;
     bool paused;
     float currHealth;
+    float currParts;
     Text[] childTexts;
     Text weaponName;
     Text ammoText;
     // Start is called before the first frame update
     void Start()
     {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        if (currentScene == 1) //level 1 - forest
+        {
+
+        } else if (currentScene == 2) //level 2 - ice
+        {
+
+        } else if (currentScene == 3) //level 3 - lava
+        {
+
+        }
         currHealth = 100;
+        currParts = 0;
         deathScreenObject.SetActive(false);
         pauseMenuLocked = false;
         paused = false;
@@ -142,12 +155,7 @@ public class uiController : MonoBehaviour
     #endregion
 
     #region "bars and UI"
-
-    public void help(string n, string d)
-    {
-        createNewMessage(n, d);
-    }
-
+    
     /// <summary>
     /// Creates a new message and displays it on the screen
     /// </summary>
@@ -279,6 +287,11 @@ public class uiController : MonoBehaviour
     /// <param name="shipStatus">The number of the ship parts collected (out of 13)</param>
     public void updateShipStatusBar(float shipStatus)
     {
+        if (shipStatus > currParts)
+        {
+            createNewMessage("Pickup", "You found a part of your ship! Only " + (13 - shipStatus) + "to go");
+        }
+        currParts = shipStatus;
         Text numberText = shipStatusBarObject.GetComponentInChildren<Text>();
         setBarWidth(shipStatusBarObject, shipStatus * 100, 30f);
         numberText.text = shipStatus + "/13";
