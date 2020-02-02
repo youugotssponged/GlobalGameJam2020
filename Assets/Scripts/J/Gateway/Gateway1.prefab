@@ -504,8 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d9cf1e8ee543642b83a046bc60b08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlock: 1
-  numNeededToUnlock: 6
+  unlock: 0
   block1: {fileID: 6352865423699922993}
   block2: {fileID: 6352865424184546188}
 --- !u!1 &6352865425155516299
