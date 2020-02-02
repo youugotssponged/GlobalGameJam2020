@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FirstPersonController : MonoBehaviour
 {
+
     //[SerializeField] private Animator anim;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float sprintSpeed = 10.0f;
@@ -18,6 +20,7 @@ public class FirstPersonController : MonoBehaviour
 
     private bool isGrounded = true;
     private bool isSprinting = false;
+
 
     public static bool showGAMEOVER = false;
 
@@ -36,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
         // Grab Player's rigidbody
         rigidbody = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+
     }
 
     private void Update()
@@ -73,10 +77,12 @@ public class FirstPersonController : MonoBehaviour
             strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime * sprintSpeed;
         }
 
+
         // Move
         transform.Translate(strafe, 0, translation);
 
     }
+
 
     private void Jump(){
         if(Input.GetKeyDown(KeyCode.Space) && CheckIsGrounded(4.0f)){

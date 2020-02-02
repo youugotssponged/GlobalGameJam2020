@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class MouseCamLook : MonoBehaviour
 {
+    public AudioSource src;
+    public AudioClip shootClip;
+    public AudioClip healthPickupClip;
+    public AudioClip shipPickupClip;
+
     public float sensitivity = 5.0f;
     public float smoothing = 2.0f;
     public GameObject character;
@@ -23,6 +29,9 @@ public class MouseCamLook : MonoBehaviour
     private void Start()
     {
         character = this.transform.parent.gameObject;
+        src = GetComponent<AudioSource>();
+        src.volume = 0.2f;
+
     }
 
     private void Update()
@@ -51,6 +60,12 @@ public class MouseCamLook : MonoBehaviour
         // Left click 
         if(Input.GetMouseButton(0)){
             RaycastHit hit; 
+            
+            // Audio
+            src.volume = 0.2f;
+            src.clip = shootClip;
+            src.PlayOneShot(src.clip);
+
             if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, enemyLayerMask)){
                 Debug.Log("You Hit an Enemy!!!!");
 
@@ -78,6 +93,12 @@ public class MouseCamLook : MonoBehaviour
             if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, healthPickupLayerMask)){
                 Debug.Log("You picked up a health pickup");
 
+                // Audio
+                src.volume = 0.2f;
+                src.clip = healthPickupClip;
+                src.PlayOneShot(src.clip);
+
+
                 var healthPickupFound = hit.collider.GetComponent<HealthPickup>();
                 if (healthPickupFound == null) return;
                 healthPickupFound.isActive = false;
@@ -94,6 +115,10 @@ public class MouseCamLook : MonoBehaviour
 
             if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, shipPickupLayerMask))
             {
+                src.volume = 0.6f;
+                src.clip = shipPickupClip;
+                src.PlayOneShot(src.clip);
+
                 Debug.Log("You picked up a SHIP PART");
 
                 var shipPickup = hit.collider.GetComponent<ShipPickup>();
