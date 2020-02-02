@@ -7,9 +7,6 @@ public class ShipPickupManager : MonoBehaviour
     public static int currentShipPartsFound = 0;
     private int totalShipParts = 13;
 
-    private static int collectedLevel1 = 0;
-    private static int collectedLevel2 = 0;
-
     private static ShipPickupManager instance = null;
     public static ShipPickupManager Instance
     {

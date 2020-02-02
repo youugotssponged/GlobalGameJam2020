@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Gateway1 : MonoBehaviour
+public class GateWay3 : MonoBehaviour
 {
-    public bool unlock = false;
-    private int numNeededToUnlock = 6;
+    // NEEDS TO BE SET BY THE BOSS WHEN THE BOSS DIES
+    public static bool bossDead = false; 
 
     public GameObject block1;
     public GameObject block2;
 
     private void Start()
     {
-        //ShipPickupManager.currentShipPartsFound = 6;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(ShipPickupManager.currentShipPartsFound == numNeededToUnlock){
-            unlock = true;
+        if(bossDead){
+            
             block1.SetActive(false);
             block2.SetActive(false);
         }
@@ -28,7 +27,7 @@ public class Gateway1 : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && unlock){
+        if(other.tag == "Player" && bossDead){
             // TELEPORT TO LEVEL 2
             SceneManager.LoadScene(2);
         } 
