@@ -30,7 +30,7 @@ public class Gateway1 : MonoBehaviour
     {
         if(other.tag == "Player" && unlock){
             // TELEPORT TO LEVEL 2
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         } 
     }
 }

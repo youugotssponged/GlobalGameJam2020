@@ -18,6 +18,9 @@ public class GateWay3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(BossHealth.BOSSHEALTH == 0) {
+            bossDead = true;
+        }
         if(bossDead){
             
             block1.SetActive(false);
@@ -29,7 +32,7 @@ public class GateWay3 : MonoBehaviour
     {
         if(other.tag == "Player" && bossDead){
             // TELEPORT TO LEVEL 2
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         } 
     }
 }

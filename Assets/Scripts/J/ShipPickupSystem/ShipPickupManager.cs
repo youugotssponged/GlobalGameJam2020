@@ -7,6 +7,8 @@ public class ShipPickupManager : MonoBehaviour
     public static int currentShipPartsFound = 0;
     private int totalShipParts = 13;
 
+    public static bool canAccessCredits = false;
+
     private static ShipPickupManager instance = null;
     public static ShipPickupManager Instance
     {
@@ -34,6 +36,9 @@ public class ShipPickupManager : MonoBehaviour
         if(currentShipPartsFound == totalShipParts)
         {
             Debug.Log("ALL PARTS COLLECTED!!!!");
+        }
+        if(BossHealth.BOSSHEALTH <= 0) {
+            canAccessCredits = true;
         }
     }
 

@@ -42,21 +42,21 @@ public class uiController : MonoBehaviour
         //updateShipStatusBar(13);
         objCont = objectivesObject.GetComponent<objectiveController>();
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        if (currentScene == 1) //level 1 - forest
+        if (currentScene == 2) //level 1 - forest
         {
             if (objCont.isEmpty(1))
             {
                 level1Parts = 0;
                 createLevel1Objectives();
             }
-        } else if (currentScene == 2) //level 2 - ice
+        } else if (currentScene == 3) //level 2 - ice
         {
             if (objCont.isEmpty(2))
             {
                 level2Parts = 0;
                 createLevel2Objectives();
             }
-        } else if (currentScene == 3) //level 3 - lava
+        } else if (currentScene == 4) //level 3 - lava
         {
             if (objCont.isEmpty(3))
             {
@@ -88,15 +88,15 @@ public class uiController : MonoBehaviour
     void Update()
     {
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        if (currentScene == 1) //level 1 - forest
+        if (currentScene == 2) //level 1 - forest
         {
             updateLevel1Objectives();
         }
-        else if (currentScene == 2) //level 2 - ice
+        else if (currentScene == 3) //level 2 - ice
         {
             updateLevel2Objectives();
         }
-        else if (currentScene == 3) //level 3 - lava
+        else if (currentScene == 4) //level 3 - lava
         {
             updateLevel3Objectives();
         }
@@ -125,20 +125,20 @@ public class uiController : MonoBehaviour
 
     void createLevel1Objectives()
     {
-        objCont.createNewObjective("Where'd my ship go?", "Retrieve some of your ship parts 0/6", 1);
-        objCont.createNewObjective("Onwards and upwards", "Find a way to the next area", 1);
+        objCont.createNewObjective("Where'd my ship go?", "Retrieve some of your ship parts 0/6", 2);
+        objCont.createNewObjective("Onwards and upwards", "Find a way to the next area", 2);
     }
 
     void createLevel2Objectives()
     {
-        objCont.createNewObjective("Picking up the pieces", "Retrieve some more of your ship parts 0/6", 2);
-        objCont.createNewObjective("More onwards and more upwards", "Find a way to the next area", 2);
+        objCont.createNewObjective("Picking up the pieces", "Retrieve some more of your ship parts 0/6", 3);
+        objCont.createNewObjective("More onwards and more upwards", "Find a way to the next area", 3);
     }
 
     void createLevel3Objectives()
     {
-        objCont.createNewObjective("The final piece of the puzzle", "Find the last part of your ship 0/1", 3);
-        objCont.createNewObjective("Something's not right...", "Find the source of the honking", 3);
+        objCont.createNewObjective("The final piece of the puzzle", "Find the last part of your ship 0/1", 4);
+        objCont.createNewObjective("Something's not right...", "Find the source of the honking", 4);
     }
 
     void updateLevel1Objectives()
@@ -370,13 +370,13 @@ public class uiController : MonoBehaviour
         {
             switch (currentScene)
             {
-                case 1:
+                case 2:
                     level1Parts++;
                     break;
-                case 2:
+                case 3:
                     level2Parts++;
                     break;
-                case 3:
+                case 4:
                     level3Parts++;
                     break;
             }

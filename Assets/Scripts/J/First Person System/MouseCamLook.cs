@@ -20,6 +20,7 @@ public class MouseCamLook : MonoBehaviour
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private LayerMask healthPickupLayerMask;
     [SerializeField] private LayerMask shipPickupLayerMask;
+    [SerializeField] private LayerMask bossMask;
 
     public static bool LOCKCAMROT = false;
 
@@ -53,6 +54,7 @@ public class MouseCamLook : MonoBehaviour
         HandleShooting();
         HandleHealthPickup();
         HandleShipPartPickup();
+        HandleShootBoss();
     }
 
     // TODO: ADD SOUND
@@ -125,6 +127,33 @@ public class MouseCamLook : MonoBehaviour
                 if (shipPickup == null) return;
                 shipPickup.isActive = false;
             }
+        }
+    }
+
+    private void HandleShootBoss()
+    {
+        // Left click 
+        if (Input.GetMouseButton(0)) {
+            RaycastHit hit;
+
+            // Audio
+            src.volume = 0.2f;
+            src.clip = shootClip;
+            src.PlayOneShot(src.clip);
+
+            if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 1000, bossMask)) {
+                Debug.Log("You Hit the boss!!!!");
+
+                // Deal the enemy damage
+
+                var shotBossHealth = hit.collider.GetComponent<BossHealth>();
+                if (shotBossHealth == null) return;
+
+                shotBossHealth.Damage(10);
+                Debug.Log("BOSS DAMAGED");
+            }
+            Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward, Color.red, 1000);
+
         }
     }
 

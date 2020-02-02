@@ -25,13 +25,13 @@ public class objectiveController : MonoBehaviour
     {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
-            case 1:
+            case 2: //level 1
                 currLevelObjList = level1ObjList;
                 break;
-            case 2:
+            case 3:
                 currLevelObjList = level2ObjList;
                 break;
-            case 3:
+            case 4:
                 currLevelObjList = level3ObjList;
                 break;
         }
@@ -53,7 +53,6 @@ public class objectiveController : MonoBehaviour
                 {
                     return true;
                 }
-                break;
             case 2:
                 if (level2ObjList.Count > 0)
                 {
@@ -63,7 +62,6 @@ public class objectiveController : MonoBehaviour
                 {
                     return true;
                 }
-                break;
             case 3:
                 if (level3ObjList.Count > 0)
                 {
@@ -73,10 +71,8 @@ public class objectiveController : MonoBehaviour
                 {
                     return true;
                 }
-                break;
             default:
                 return false;
-                break;
         }
     }
 
@@ -90,15 +86,15 @@ public class objectiveController : MonoBehaviour
         Objective obj = new Objective(currLevelObjList.Count, objName, objDesc, objPrefab.transform, parentTransform);
         switch (levelIndex)
         {
-            case 1:
+            case 2: //level 1
                 obj.setIndex(level1ObjList.Count);
                 level1ObjList.Add(obj);
                 break;
-            case 2:
+            case 3: //level 2
                 obj.setIndex(level2ObjList.Count);
                 level2ObjList.Add(obj);
                 break;
-            case 3:
+            case 4: //level 3
                 obj.setIndex(level3ObjList.Count);
                 level3ObjList.Add(obj);
                 break;
@@ -122,7 +118,8 @@ public class objectiveController : MonoBehaviour
         {
             for (int i = level1ObjList.Count; i > 0; i--)
             {
-                level1ObjList.Remove(level1ObjList[i]);
+                //level1ObjList.Remove(level1ObjList[i]);
+                level1ObjList[i].setCompleted(true);
             }
         }
 
@@ -130,7 +127,8 @@ public class objectiveController : MonoBehaviour
         {
             for (int i = level2ObjList.Count; i > 0; i--)
             {
-                level2ObjList.Remove(level2ObjList[i]);
+                //level2ObjList.Remove(level2ObjList[i]);
+                level2ObjList[i].setCompleted(true);
             }
         }
 
@@ -138,9 +136,11 @@ public class objectiveController : MonoBehaviour
         {
             for (int i = level3ObjList.Count; i > 0; i--)
             {
-                level3ObjList.Remove(level3ObjList[i]);
+                //level3ObjList.Remove(level3ObjList[i]);
+                level3ObjList[i].setCompleted(true);
             }
         }
+        updateObjectivesList();
     }
 
     public void updateLevel1Objs(int lvl1Parts)
