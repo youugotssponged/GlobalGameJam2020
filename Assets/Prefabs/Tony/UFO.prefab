@@ -986,6 +986,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8628973258958225982}
   - component: {fileID: 756857293}
+  - component: {fileID: 756857294}
+  - component: {fileID: 4531328151052483551}
   m_Layer: 0
   m_Name: UFO
   m_TagString: Untagged
@@ -1028,6 +1030,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &756857294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4727403763665088557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf5d066d7232794386672c4457b8d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UFO: {fileID: 8468353028836581540}
+  rotationSpeed: 300
+--- !u!135 &4531328151052483551
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4727403763665088557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.91
+  m_Center: {x: 0, y: 1.82, z: 0}
 --- !u!1 &4908073966272135562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1735,6 @@ GameObject:
   - component: {fileID: 9216573626486555805}
   - component: {fileID: 3268175756918613350}
   - component: {fileID: 1306686374330373082}
-  - component: {fileID: 1442680038}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1778,22 +1806,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1442680038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8468353028836581540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3e69cb62a08cc24c8506bdaa7ab7c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToRotate: {fileID: 8468353028836581540}
-  rotationSpeedX: 0
-  rotationSpeedY: 0
-  rotationSpeedZ: 300
 --- !u!1 &8563625495451298517
 GameObject:
   m_ObjectHideFlags: 0

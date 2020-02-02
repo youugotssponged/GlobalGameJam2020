@@ -25,8 +25,6 @@ public class MeteorMover : MonoBehaviour
 
             amount++;
 
-            Debug.Log("HIT!");
-
             start.position = new Vector3(randomX, randomY, start.position.z);
 
             transform.position = start.transform.position;
