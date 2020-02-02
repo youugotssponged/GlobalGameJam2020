@@ -25,6 +25,7 @@ public class GateWay3 : MonoBehaviour
             
             block1.SetActive(false);
             block2.SetActive(false);
+            ShipPickupManager.currentShipPartsFound = 13;
         }
     }
 

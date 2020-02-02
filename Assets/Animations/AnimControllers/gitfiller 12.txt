@@ -1,8 +1,0 @@
-This useless file is for stopping github 
-removing empty folders from my unity projects...
-
-#FuckSakeGit
-#FixYoShit
-
-with love
-- J
