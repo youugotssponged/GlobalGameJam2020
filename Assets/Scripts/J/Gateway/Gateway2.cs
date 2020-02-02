@@ -6,14 +6,16 @@ using UnityEngine.SceneManagement;
 public class Gateway2 : MonoBehaviour
 {
     public bool unlock = false;
-    private int numNeededToUnlock = 12;
+    public bool reverseDoor = false; 
+    private int numNeededToUnlock = 6;
+    private int fullToReverse = 13;
 
     public GameObject block1;
     public GameObject block2;
 
     private void Start()
     {
-        //ShipPickupManager.currentShipPartsFound = 6;
+        
     }
 
     // Update is called once per frame
@@ -21,6 +23,11 @@ public class Gateway2 : MonoBehaviour
     {
         if(ShipPickupManager.currentShipPartsFound == numNeededToUnlock){
             unlock = true;
+            block1.SetActive(false);
+            block2.SetActive(false);
+        } else if(ShipPickupManager.currentShipPartsFound == fullToReverse){
+            unlock = false;
+            reverseDoor = true;
             block1.SetActive(false);
             block2.SetActive(false);
         }
@@ -31,6 +38,8 @@ public class Gateway2 : MonoBehaviour
         if(other.tag == "Player" && unlock){
             // TELEPORT TO LEVEL 2
             SceneManager.LoadScene(3);
+        } else if(other.tag == "Player" && reverseDoor){
+            SceneManager.LoadScene(1);
         }
     }
 }
