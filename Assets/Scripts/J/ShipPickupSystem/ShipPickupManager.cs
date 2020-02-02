@@ -25,7 +25,6 @@ public class ShipPickupManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        currentShipPartsFound += 1;
     }
 
     // Update is called once per frame

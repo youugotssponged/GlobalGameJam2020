@@ -60,6 +60,7 @@ public class uiController : MonoBehaviour
                 pauseGame();
             }
         }
+        updateHealthBar(FirstPersonController.PlayerHealth);
         updateShipStatusBar(ShipPickupManager.currentShipPartsFound);
     }
 
@@ -99,6 +100,7 @@ public class uiController : MonoBehaviour
 
     public void returnToMenuButtonPressed()
     {
+        FirstPersonController.PlayerHealth = 100;
         paused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);

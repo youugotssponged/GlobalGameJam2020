@@ -35,13 +35,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        uicont.updateHealthBar(FirstPersonController.PlayerHealth);
         if (FirstPersonController.showGAMEOVER)
         {
             uicont.showDeathScreen();
         }
-
-        uicont.updateShipStatusBar(ShipPickupManager.currentShipPartsFound);
 
 
 
