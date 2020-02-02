@@ -106,6 +106,43 @@ public class objectiveController : MonoBehaviour
         addObjectiveToScreen(obj);
     }
 
+    public void createNewObjective(string objName, string objDesc)
+    {
+        Objective obj = new Objective(0, objName, objDesc, objPrefab.transform, parentTransform);
+        currLevelObjList.Add(obj);
+        level1ObjList.Add(obj);
+        level2ObjList.Add(obj);
+        level3ObjList.Add(obj);
+        addObjectiveToScreen(obj);
+    }
+
+    public void clearObjs()
+    {
+        if (level1ObjList.Count > 0)
+        {
+            for (int i = level1ObjList.Count; i > 0; i--)
+            {
+                level1ObjList.Remove(level1ObjList[i]);
+            }
+        }
+
+        if (level2ObjList.Count > 0)
+        {
+            for (int i = level2ObjList.Count; i > 0; i--)
+            {
+                level2ObjList.Remove(level2ObjList[i]);
+            }
+        }
+
+        if (level3ObjList.Count > 0)
+        {
+            for (int i = level3ObjList.Count; i > 0; i--)
+            {
+                level3ObjList.Remove(level3ObjList[i]);
+            }
+        }
+    }
+
     public void updateLevel1Objs(int lvl1Parts)
     {
         if (level1ObjList[0].getName() == "Where'd my ship go?")

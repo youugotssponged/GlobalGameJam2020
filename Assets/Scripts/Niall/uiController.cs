@@ -23,11 +23,11 @@ public class uiController : MonoBehaviour
     bool paused;
 
     float currHealth;
+    float currParts;
+
     int level1Parts;
     int level2Parts;
     int level3Parts;
-    float currParts;
-
     int currentScene;
 
     objectiveController objCont;
@@ -39,6 +39,7 @@ public class uiController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //updateShipStatusBar(13);
         objCont = objectivesObject.GetComponent<objectiveController>();
         currentScene = SceneManager.GetActiveScene().buildIndex;
         if (currentScene == 1) //level 1 - forest
@@ -59,7 +60,7 @@ public class uiController : MonoBehaviour
         {
             if (objCont.isEmpty(3))
             {
-                level2Parts = 0;
+                level3Parts = 0;
                 createLevel3Objectives();
             }
         }
@@ -112,6 +113,10 @@ public class uiController : MonoBehaviour
                 pauseGame();
             }
         }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    updateShipStatusBar(13);
+        //}
         updateHealthBar(FirstPersonController.PlayerHealth);
         updateShipStatusBar(ShipPickupManager.currentShipPartsFound);
     }
@@ -381,6 +386,21 @@ public class uiController : MonoBehaviour
         Text numberText = shipStatusBarObject.GetComponentInChildren<Text>();
         setBarWidth(shipStatusBarObject, shipStatus * 100, 30f);
         numberText.text = shipStatus + "/13";
+        if (shipStatus == 13)
+        {
+            goHome();
+        }
+    }
+
+    void goHome()
+    {
+        clearObjectives();
+        objCont.createNewObjective("Go home", "");
+    }
+
+    void clearObjectives()
+    {
+        objCont.clearObjs();
     }
 
     /// <summary>
