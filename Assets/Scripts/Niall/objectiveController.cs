@@ -3,25 +3,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class objectiveController : MonoBehaviour
 {
     public Transform parentTransform;
     public GameObject objPrefab;
-    List<Objective> currentObjList = new List<Objective>();
+    List<Objective> currLevelObjList = new List<Objective>();
+    List<Objective> level1ObjList = new List<Objective>();
+    List<Objective> level2ObjList = new List<Objective>();
+    List<Objective> level3ObjList = new List<Objective>();
+
     // Start is called before the first frame update
     void Start()
     {
-        //createNewObjective("Where's that bloody stick?", "Find the ship's control stick");
-        //createNewObjective("What about the engine?", "Find the ship's engine rotor");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentObjList.Count > 0)
+        switch (SceneManager.GetActiveScene().buildIndex)
+        {
+            case 1:
+                currLevelObjList = level1ObjList;
+                break;
+            case 2:
+                currLevelObjList = level2ObjList;
+                break;
+            case 3:
+                currLevelObjList = level3ObjList;
+                break;
+        }
+        if (currLevelObjList.Count > 0)
         {
             updateObjectivesList();
+        }
+    }
+
+    public bool isEmpty(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                if (level1ObjList.Count > 0)
+                {
+                    return false;
+                } else
+                {
+                    return true;
+                }
+                break;
+            case 2:
+                if (level2ObjList.Count > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                break;
+            case 3:
+                if (level3ObjList.Count > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+                break;
         }
     }
 
@@ -30,11 +85,52 @@ public class objectiveController : MonoBehaviour
     /// </summary>
     /// <param name="objName">Name of the objective</param>
     /// <param name="objDesc">Description of the objective's requirements</param>
-    void createNewObjective(string objName, string objDesc)
+    public void createNewObjective(string objName, string objDesc, int levelIndex)
     {
-        Objective obj = new Objective(currentObjList.Count, objName, objDesc, objPrefab.transform, parentTransform);
-        currentObjList.Add(obj);
+        Objective obj = new Objective(currLevelObjList.Count, objName, objDesc, objPrefab.transform, parentTransform);
+        switch (levelIndex)
+        {
+            case 1:
+                obj.setIndex(level1ObjList.Count);
+                level1ObjList.Add(obj);
+                break;
+            case 2:
+                obj.setIndex(level2ObjList.Count);
+                level2ObjList.Add(obj);
+                break;
+            case 3:
+                obj.setIndex(level3ObjList.Count);
+                level3ObjList.Add(obj);
+                break;
+        }
         addObjectiveToScreen(obj);
+    }
+
+    public void updateLevel1Objs(int lvl1Parts)
+    {
+        if (level1ObjList[0].getName() == "Where'd my ship go?")
+        {
+            level1ObjList[0].setDesc("Retrieve some of your ship parts " + lvl1Parts + "/6");
+            level1ObjList[0].setCompleted(checkCompleted(level1ObjList[0], lvl1Parts));
+        }
+    }
+
+    public void updateLevel2Objs(int lvl2Parts)
+    {
+        if (level2ObjList[0].getName() == "Picking up the pieces")
+        {
+            level2ObjList[0].setDesc("Retrieve some more of your ship parts " + lvl2Parts + "/6");
+            level2ObjList[0].setCompleted(checkCompleted(level2ObjList[0], lvl2Parts));
+        }
+    }
+
+    public void updateLevel3Objs(int lvl3Parts)
+    {
+        if (level3ObjList[0].getName() == "The final piece of the puzzle")
+        {
+            level3ObjList[0].setDesc("Find the last part of your ship " + lvl3Parts + "/6");
+            level3ObjList[0].setCompleted(checkCompleted(level3ObjList[0], lvl3Parts));
+        }
     }
 
     /// <summary>
@@ -42,7 +138,7 @@ public class objectiveController : MonoBehaviour
     /// </summary>
     void updateObjectivesList()
     {
-        foreach (Objective obj in currentObjList) //loops through the player's current objectives
+        foreach (Objective obj in currLevelObjList) //loops through the player's current objectives
         {
             if (obj.getCompleted()) //if the objective is completed remove it from the list
             {
@@ -50,9 +146,74 @@ public class objectiveController : MonoBehaviour
                 break; //breaks out of the foreach loop so the program doesn't loop through an element that isn't there (stops an enumeration error)
             } else //if the objective is not completed, make sure it's in the right place on the screeni
             {
-                obj.setIndex(currentObjList.BinarySearch(obj)); //sets the objective's new index in the on screen list to its index in the list
+                obj.setIndex(currLevelObjList.BinarySearch(obj)); //sets the objective's new index in the on screen list to its index in the list
                 obj.updatePosition();
             }
+        }
+    }
+
+    bool checkCompleted(Objective o, int r)
+    {
+        if (level1ObjList.Contains(o))
+        {
+            if (o.getName() == "Where'd my ship go?")
+            {
+                if (r == 6)
+                {
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            } else if (o.getName() == "Onwards and upwards")
+            {
+                //if the portal is open then completed TODO
+                return false;
+            } else
+            {
+                return false;
+            }
+        } else if (level2ObjList.Contains(o))
+        {
+            if (o.getName() == "Picking up the pieces")
+            {
+                if (r == 6)
+                {
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            } else if (o.getName() == "More onwards and more upwards")
+            {
+                //if the portal is open then completed TODO
+                return false;
+            } else
+            {
+                return false;
+            }
+        } else if (level3ObjList.Contains(o))
+        {
+            if (o.getName() == "The final piece of the puzzle")
+            {
+                if (r == 1)
+                {
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            } else if (o.getName() == "Something's not right...")
+            {
+                //when boss appears, complete this objective and add a new one to kill the boss
+                return false;
+            } else
+            {
+                return false;
+            }
+        } else
+        {
+            return false;
         }
     }
 
@@ -65,12 +226,12 @@ public class objectiveController : MonoBehaviour
     {
         obj.setOnScreen(false);
         obj.getTransform().gameObject.SetActive(false);
-        currentObjList.Remove(obj);
+        currLevelObjList.Remove(obj);
     }
 
     public void testCompleteObj()
     {
-        currentObjList[0].setCompleted(true);
+        currLevelObjList[0].setCompleted(true);
     }
 
 }
@@ -118,7 +279,7 @@ class Objective : MonoBehaviour, IComparable<Objective>
     /// </summary>
     public void updatePosition()
     {
-        body.localPosition = new Vector3(0, -120 - (index * 100), 0);
+        body.localPosition = new Vector3(0, -120 - (index * 180), 0);
     }
 
     void displayDetails()
@@ -137,6 +298,17 @@ class Objective : MonoBehaviour, IComparable<Objective>
     }
 
     #region "getters and setters"
+
+    public string getName()
+    {
+        return objName;
+    }
+
+    public void setDesc(string d)
+    {
+        objDesc = d;
+        displayDetails();
+    }
 
     public void setIndex(int i)
     {

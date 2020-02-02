@@ -14,31 +14,58 @@ public class uiController : MonoBehaviour
     public GameObject bossBarObject;
     public GameObject pauseMenuObject;
     public GameObject deathScreenObject;
+    public GameObject objectivesObject;
+
     public Transform messageParent;
     public Transform messageTransform;
+
     bool pauseMenuLocked;
     bool paused;
+
     float currHealth;
+    int level1Parts;
+    int level2Parts;
+    int level3Parts;
     float currParts;
+
+    int currentScene;
+
+    objectiveController objCont;
+
     Text[] childTexts;
     Text weaponName;
     Text ammoText;
+
     // Start is called before the first frame update
     void Start()
     {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        objCont = objectivesObject.GetComponent<objectiveController>();
+        currentScene = SceneManager.GetActiveScene().buildIndex;
         if (currentScene == 1) //level 1 - forest
         {
-
+            if (objCont.isEmpty(1))
+            {
+                level1Parts = 0;
+                createLevel1Objectives();
+            }
         } else if (currentScene == 2) //level 2 - ice
         {
-
+            if (objCont.isEmpty(2))
+            {
+                level2Parts = 0;
+                createLevel2Objectives();
+            }
         } else if (currentScene == 3) //level 3 - lava
         {
-
+            if (objCont.isEmpty(3))
+            {
+                level2Parts = 0;
+                createLevel3Objectives();
+            }
         }
         currHealth = 100;
-        currParts = 0;
+        currParts = ShipPickupManager.currentShipPartsFound;
+        level3Parts = 0;
         deathScreenObject.SetActive(false);
         pauseMenuLocked = false;
         paused = false;
@@ -54,14 +81,24 @@ public class uiController : MonoBehaviour
                 ammoText = childTexts[i];
             }
         }
-        //updateWeapon("Ray gun"); //testing
-        //updateAmmo(100, 100);
-        //createNewMessage("Tutorial", "Do stuff");
     }
     
     // Update is called once per frame
     void Update()
     {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+        if (currentScene == 1) //level 1 - forest
+        {
+            updateLevel1Objectives();
+        }
+        else if (currentScene == 2) //level 2 - ice
+        {
+            updateLevel2Objectives();
+        }
+        else if (currentScene == 3) //level 3 - lava
+        {
+            updateLevel3Objectives();
+        }
         if (Input.GetKeyDown("escape") && !pauseMenuLocked)
         {
             if (paused) //if the game is already paused, resume the game
@@ -78,6 +115,43 @@ public class uiController : MonoBehaviour
         updateHealthBar(FirstPersonController.PlayerHealth);
         updateShipStatusBar(ShipPickupManager.currentShipPartsFound);
     }
+
+    #region "objectives"
+
+    void createLevel1Objectives()
+    {
+        objCont.createNewObjective("Where'd my ship go?", "Retrieve some of your ship parts 0/6", 1);
+        objCont.createNewObjective("Onwards and upwards", "Find a way to the next area", 1);
+    }
+
+    void createLevel2Objectives()
+    {
+        objCont.createNewObjective("Picking up the pieces", "Retrieve some more of your ship parts 0/6", 2);
+        objCont.createNewObjective("More onwards and more upwards", "Find a way to the next area", 2);
+    }
+
+    void createLevel3Objectives()
+    {
+        objCont.createNewObjective("The final piece of the puzzle", "Find the last part of your ship 0/1", 3);
+        objCont.createNewObjective("Something's not right...", "Find the source of the honking", 3);
+    }
+
+    void updateLevel1Objectives()
+    {
+        objCont.updateLevel1Objs(level1Parts);
+    }
+
+    void updateLevel2Objectives()
+    {
+        objCont.updateLevel2Objs(level2Parts);
+    }
+
+    void updateLevel3Objectives()
+    {
+        objCont.updateLevel3Objs(level3Parts);
+    }
+
+    #endregion
 
     #region "pause menu"
 
@@ -215,9 +289,9 @@ public class uiController : MonoBehaviour
     /// <returns></returns>
     IEnumerator FadeOut(Text t1, Text t2)
     {
-        for (float i = 0; i < 10; i += Time.deltaTime)
+        for (float i = 0; i < 3; i += Time.deltaTime)
         {
-            //keeps the image on screen for 10 seconds
+            //keeps the image on screen for 3 seconds
             yield return null;
         }
         // fade from opaque to transparent
@@ -289,7 +363,19 @@ public class uiController : MonoBehaviour
     {
         if (shipStatus > currParts)
         {
-            createNewMessage("Pickup", "You found a part of your ship! Only " + (13 - shipStatus) + "to go");
+            switch (currentScene)
+            {
+                case 1:
+                    level1Parts++;
+                    break;
+                case 2:
+                    level2Parts++;
+                    break;
+                case 3:
+                    level3Parts++;
+                    break;
+            }
+            createNewMessage("Pickup", "You found a part of your ship! Only " + (13 - shipStatus) + " to go");
         }
         currParts = shipStatus;
         Text numberText = shipStatusBarObject.GetComponentInChildren<Text>();
