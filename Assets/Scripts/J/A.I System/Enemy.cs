@@ -6,6 +6,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public AudioSource src;
+    public AudioClip enemyHurtClip;
+    public AudioClip playerHurtClip;
+
     public NavMeshAgent agent;
 
     public enum State{
@@ -30,6 +34,9 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = true;
         agent.updateRotation = true;
+
+        src = GetComponent<AudioSource>();
+        src.volume = 0.7f;
 
         state = State.PATROL;
         alive = true;
@@ -104,6 +111,9 @@ public class Enemy : MonoBehaviour
         private void DealDamage(float damageDealt){
             var playerObject = GameObject.FindWithTag("Player");
             //var playerScript = playerObject.GetComponent<FirstPersonController>();
+
+            src.clip = playerHurtClip;
+            src.PlayOneShot(src.clip);
 
             FirstPersonController.PlayerHealth -= damageDealt;
             Debug.Log("Player Health: " + FirstPersonController.PlayerHealth);
